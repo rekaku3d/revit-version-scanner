@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="#090d16" stroke="url(#blueGrad)" stroke-width="8" />
+  <!-- Stylized scanning target / document -->
+  <g transform="translate(106, 106)">
+    <!-- OLE Document shape -->
+    <path d="M60 20 h140 l80 80 v180 a20 20 0 0 1 -20 20 h-200 a20 20 0 0 1 -20 -20 v-240 a20 20 0 0 1 20 -20 z" fill="none" stroke="url(#neonGrad)" stroke-width="16" stroke-linejoin="round" />
+    <!-- Folded corner -->
+    <path d="M200 20 v80 h80" fill="none" stroke="url(#neonGrad)" stroke-width="16" stroke-linejoin="round" />
+    <!-- Letter R inside -->
+    <path d="M90 90 v120 M90 90 h50 a30 30 0 0 1 0 60 h-50 M140 150 l40 60" fill="none" stroke="url(#neonGrad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Scanline laser ray -->
+    <line x1="20" y1="150" x2="280" y2="150" stroke="#f43f5e" stroke-width="6" stroke-linecap="round" filter="url(#glow)" />
+    <!-- Scanline sparkles -->
+    <circle cx="150" cy="150" r="8" fill="#ffffff" filter="url(#glow)" />
+  </g>
+</svg>

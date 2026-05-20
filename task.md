@@ -1,0 +1,22 @@
+# Revit Version Scanner - Tasks
+
+- [x] Create project folder and download library
+  - [x] Create project folder `C:\Users\Admin\.gemini\antigravity\scratch\revit-version-scanner`
+  - [x] Download `cfb.min.js` from jsDelivr and save it locally
+- [x] Implement user interface
+  - [x] Create `index.html` with drag-and-drop zone, stats dashboard, file list table, and details inspector
+  - [x] Create `index.css` with a premium dark-themed design (neon glows, glassmorphism, animations, clean typography)
+- [x] Implement parsing logic
+  - [x] Create `app.js` with file drag-and-drop handlers, parallel file reader, CFB metadata parser, and DOM updater
+- [x] Verify functionality
+  - [x] Start a local web server to test the app
+  - [x] Validate multi-file drop, scan stats, detailed information display, and offline capability
+- [x] Bug Fixing & Reliability Enhancements
+  - [x] Fixed input element overlay blocking drag-and-drop interactions in HTML/CSS
+  - [x] Added binary search fallback parsing for OLE-unreadable or corrupted Revit files
+  - [x] Added DOM checks and try-catch blocks to prevent crashes inside the Inspector Panel
+- [x] Progressive Web App (PWA) Desktop Installation
+  - [x] Created `manifest.json` metadata file
+  - [x] Designed custom vector logo `icon.svg`
+  - [x] Implemented cache-first offline service worker `sw.js`
+  - [x] Integrated PWA install trigger button in header

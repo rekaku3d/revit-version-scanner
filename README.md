@@ -1,6 +1,8 @@
-# 🔍 Revit File Version Scanner (Offline PWA)
+# 🔍 Revit File Version Scanner
 
-A premium, glassmorphic, and completely offline Progressive Web App (PWA) to quickly scan multiple Autodesk Revit files (`.rvt`, `.rfa`, `.rte`, `.rft`) inside the browser. It extracts version, build, worksharing status, and central paths without requiring a Revit installation.
+A premium, glassmorphic **online web app** to quickly scan multiple Autodesk Revit files (`.rvt`, `.rfa`, `.rte`, `.rft`) in the browser. It extracts version, build, worksharing status, and central paths without requiring a Revit installation. Files are processed entirely client-side — nothing is uploaded to any server.
+
+🌐 **Live at**: [https://revitversionscan.pages.dev](https://revitversionscan.pages.dev)
 
 ---
 
@@ -8,70 +10,83 @@ A premium, glassmorphic, and completely offline Progressive Web App (PWA) to qui
 
 - **⚡ Multi-File Drag-and-Drop**: Drop multiple Revit files at once to queue and parse them concurrently in real-time.
 - **🔒 100% Client-Side & Private**: All file reading and binary parsing are executed locally in the browser using the HTML5 File API. Your BIM models never leave your computer.
-- **💻 Desktop Installation (PWA)**: Register it as a desktop application with one click. It caches all files locally using a Service Worker so it runs fully offline.
+- **💻 Installable PWA**: Install as a desktop app with one click via the browser's install prompt. Uses a **network-first** Service Worker strategy so it always serves the latest content.
 - **🧠 Hybrid Parsing Engine**:
-  - **OLE Storage Extraction**: Utilizes an offline-optimized `cfb.js` parser to extract the `BasicFileInfo` stream from the compound binary format.
-  - **Raw Binary Scanning Fallback**: Dynamically falls back to direct `ArrayBuffer` byte scanning if the OLE headers are corrupted or modified, ensuring 100% extraction rates.
+  - **OLE Storage Extraction**: Uses `cfb.js` to extract the `BasicFileInfo` stream from the OLE compound binary format.
+  - **Raw Binary Scanning Fallback**: Falls back to direct `ArrayBuffer` byte scanning if OLE headers are corrupted, ensuring high extraction rates.
 - **📊 Modern Dashboard & Inspector**:
-  - Interactive counters for Total, Revit 2026+, Older Versions, and Errors.
-  - Interactive file list queue with highlight-to-inspect functionality.
-  - A metadata inspector panel showing build numbers, last saved username, central paths, local status, and unique document IDs.
-  - Timeline layout showing Revit support & backward compatibility info.
+  - Live counters for Total, Revit 2026+, Older Versions, and Errors.
+  - Interactive file list queue with highlight-to-inspect.
+  - Metadata inspector showing build numbers, last saved username, central paths, local/central status, and unique document IDs.
+  - Revit version timeline and backward compatibility matrix.
 
 ---
 
-## 🚀 How to Run Locally
+## 🌐 Online Usage
 
-### 1. One-Click Launcher (Windows)
-Double-click the **`Revit Scanner Server.bat`** file on your Desktop or in the project root folder. It will:
-- Start a local Python HTTP server on port 8000.
-- Open your browser automatically to `http://127.0.0.1:8000`.
+Simply visit **[https://revitversionscan.pages.dev](https://revitversionscan.pages.dev)** in any modern browser — no installation required.
 
-### 2. Manual Command Line
-Open a terminal in the project directory and run:
+To install as a desktop app:
+1. Open the site in Chrome or Edge.
+2. Click the **"Install Desktop App"** button in the top-right header.
+3. A shortcut is added to your desktop/start menu for quick access.
+
+---
+
+## 💻 Running Locally
+
+### Option 1 — One-Click Launcher (Windows)
+Double-click **`Revit Scanner Server.bat`** in the project folder. It starts a local Python HTTP server and opens the browser automatically at `http://127.0.0.1:8000`.
+
+### Option 2 — Manual CLI
 ```bash
 python -m http.server 8000 --bind 127.0.0.1
 ```
-Then navigate to `http://127.0.0.1:8000` in your web browser.
-
----
-
-## 🖥️ Installing as a Desktop App (PWA)
-Once the app is running on your local server:
-1. Look for the **"Install Desktop App"** button in the top-right of the header.
-2. Click it to install the application natively on your computer.
-3. A shortcut icon will be added to your desktop/start menu, allowing you to use it like a native app anytime, even without an internet connection.
+Then navigate to `http://127.0.0.1:8000`.
 
 ---
 
 ## 📂 Project Structure
 
-- **`index.html`** – Clean, semantic structure with the upload drop-zone, queue table, and detailed inspector panels.
-- **`index.css`** – Modern, responsive design system utilizing glassmorphism, glowing borders, custom scrollbars, and Outfit/Inter typography.
-- **`app.js`** – Binary array buffer parsing, regex key extraction, service worker registration, and reactive UI logic.
-- **`cfb.min.js`** – Client-side library for parsing OLE Compound Document formats locally.
-- **`sw.js`** – Service worker managing offline caching.
-- **`manifest.json`** – PWA manifest metadata.
-- **`icon.svg`** – High-res vector artwork used as the app logo and shortcut icon.
-- **`Revit Scanner Server.bat`** – One-click launcher for the Python server.
+| File | Purpose |
+|---|---|
+| `index.html` | App layout — drop zone, queue table, inspector panels |
+| `index.css` | Glassmorphic dark theme, animations, responsive layout |
+| `app.js` | Binary parsing, SW registration, reactive UI logic |
+| `cfb.min.js` | Client-side OLE Compound File Binary parser |
+| `sw.js` | Service Worker — network-first caching strategy |
+| `manifest.json` | PWA metadata (`start_url: "/"`, `scope: "/"`) |
+| `icon.svg` | High-res vector app icon |
+| `troubleshooting.md` | Deployment error log and fixes |
+| `Revit Scanner Server.bat` | Local dev server launcher |
 
 ---
 
-## ⚙️ How it Works under the Hood
+## ⚙️ How It Works
 
-Revit files are structured using Microsoft's OLE Compound File Binary (CFB) format. This app parses the binary structure:
-1. It reads the files using HTML5 `FileReader` as an `ArrayBuffer`.
-2. It extracts the raw binary data stream named `BasicFileInfo`.
-3. It decodes the stream using `TextDecoder('utf-16le')` (with a fallback to `utf-8` if needed).
-4. It extracts structured fields using regex patterns:
-   - **Version Format**: `Format:\s*(\d+)`
-   - **Revit Build**: `Build:\s*([^\r\n]*)`
-   - **Central Model Path**: `Central Path:\s*([^\r\n]*)`
-   - **Worksharing State**: `Worksharing:\s*([^\r\n]*)`
-   - **Last Saved Path**: `Last Saved Path:\s*([^\r\n]*)`
+Revit files use Microsoft's OLE Compound File Binary (CFB) format. The app:
+1. Reads files via HTML5 `FileReader` as `ArrayBuffer`.
+2. Parses the OLE container using `cfb.js` to find the `BasicFileInfo` stream.
+3. Decodes the stream with `TextDecoder('utf-16le')` (UTF-8 fallback).
+4. Extracts metadata fields using regex:
+
+| Field | Pattern |
+|---|---|
+| Version | `Format:\s*(\d+)` |
+| Build | `Build:\s*([^\r\n]*)` |
+| Central Path | `Central Path:\s*([^\r\n]*)` |
+| Worksharing | `Worksharing:\s*([^\r\n]*)` |
+| Last Saved Path | `Last Saved Path:\s*([^\r\n]*)` |
+
+5. Falls back to raw binary scan if OLE parsing fails.
+
+---
+
+## 🚀 Deployment
+
+Hosted on **Cloudflare Pages**, auto-deployed from the `main` branch of [github.com/rekaku3d/revit-version-scanner](https://github.com/rekaku3d/revit-version-scanner) on every push.
 
 ---
 
 ## 🛠️ Developed By
-Developed by **Rekaku Developer**.
-Licensed under the MIT License.
+Developed by **Rekaku Developer** · Licensed under the MIT License.

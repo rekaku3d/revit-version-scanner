@@ -3,7 +3,7 @@
 // This ensures the app always serves fresh content from Cloudflare Pages.
 // Offline caching is minimal to avoid 500 errors after PWA installation.
 
-const CACHE_NAME = 'revit-scanner-v3';
+const CACHE_NAME = 'revit-scanner-v4';
 
 // Only pre-cache the bare minimum for a functional offline fallback
 const PRECACHE_ASSETS = [

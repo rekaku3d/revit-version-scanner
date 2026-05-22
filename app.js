@@ -1,12 +1,17 @@
 // Revit Version Scanner - Client-Side Parser
 // Uses local copy of cfb.min.js for OLE structured storage parsing.
+// Online webapp: network-first strategy, PWA install supported.
 
-// Service Worker Registration for PWA & offline support
+// Service Worker Registration (Network-First PWA)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('[Service Worker] Registered successfully', reg.scope))
-            .catch(err => console.error('[Service Worker] Registration failed', err));
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => {
+                console.log('[SW] Registered, scope:', reg.scope);
+                // Force update on every page load to prevent stale SW
+                reg.update();
+            })
+            .catch(err => console.error('[SW] Registration failed:', err));
     });
 }
 

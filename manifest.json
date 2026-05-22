@@ -1,15 +1,17 @@
 {
   "name": "Revit Version Scanner",
   "short_name": "Revit Scan",
-  "description": "Scan and inspect Revit file formats and versions offline in the browser.",
-  "start_url": "./index.html",
+  "description": "Scan and inspect Revit file versions and metadata directly in the browser.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#090d16",
   "theme_color": "#090d16",
   "orientation": "any",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

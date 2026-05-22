@@ -1,7 +1,7 @@
 {
   "name": "Revit Version Scanner",
   "short_name": "Revit Scan",
-  "description": "Scan and inspect Revit file versions and metadata directly in the browser.",
+  "description": "Scan and inspect Revit file versions and metadata directly in your browser.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

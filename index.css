@@ -147,11 +147,11 @@ body {
     letter-spacing: 0.5px;
 }
 
-.offline-badge {
-    background-color: rgba(14, 165, 233, 0.15);
-    color: var(--color-blue);
-    border: 1px solid rgba(14, 165, 233, 0.3);
-    box-shadow: 0 0 10px rgba(14, 165, 233, 0.1);
+.web-badge {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--color-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
 }
 
 .subtitle {
